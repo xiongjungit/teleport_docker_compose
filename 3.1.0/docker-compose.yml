@@ -4,6 +4,7 @@ services:
     image: harbor.mxnet.io/library/mysql:5.7
     container_name: mysql
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - ./data/db:/var/lib/mysql
     restart: always
     command: [
@@ -31,6 +32,7 @@ services:
     tty: true
     command: bash -c "/usr/local/teleport/start.sh && tail -f /usr/local/teleport/data/log/*.log"
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - ./data/etc:/usr/local/teleport/data/etc
       - ./data/replay:/usr/local/teleport/data/replay
       - ./data/log:/usr/local/teleport/data/log 
