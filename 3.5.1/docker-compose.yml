@@ -1,44 +1,57 @@
 version: '3.1'
 services:
-  db:
-    image: harbor.mxnet.io/library/mysql:5.7
+  mysql:
+    image: mysql:5.7
     container_name: mysql
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ./data/db:/var/lib/mysql
+      - $PWD/data/etc/mysql/my.cnf:/etc/mysql/my.cnf:ro
+      - $PWD/data/db/mysql:/var/lib/mysql
     restart: always
     command: [
-      "--log-bin=mysql-bin",
-      "--server-id=1",
       "--character-set-server=utf8mb4",
       "--collation-server=utf8mb4_unicode_ci",
       "--innodb_flush_log_at_trx_commit=1",
-      "--sync_binlog=1"
+      "--sync_binlog=1",
       ]
     environment:
-      MYSQL_ROOT_PASSWORD: 12wsxCDE#
+      MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: teleport
       MYSQL_USER: teleport
-      MYSQL_PASSWORD: 12wsxCDE#
+      MYSQL_PASSWORD: teleport
     ports:
       - 3306:3306
 
   teleport:
     build: .
-    image: harbor.mxnet.io/library/tp4a/teleport:v3.5.1
+    image: teleport:v3.5.1
     container_name: teleport
     depends_on:
-      - db
+      - mysql
     tty: true
     command: bash -c "/usr/local/teleport/start.sh && tail -f /usr/local/teleport/data/log/*.log"
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ./data/etc:/usr/local/teleport/data/etc
-      - ./data/replay:/usr/local/teleport/data/replay
-      - ./data/log:/usr/local/teleport/data/log 
+      - $PWD/data/etc/teleport:/usr/local/teleport/data/etc
+      - $PWD/data/replay:/usr/local/teleport/data/replay
+      - $PWD/data/logs/teleport:/usr/local/teleport/data/log 
     ports:
       - 7190:7190
       - 127.0.0.1:52080:52080
       - 52089:52089
       - 52189:52189
       - 52389:52389
+    
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    ports:
+      - 80:80
+    volumes:
+      - $PWD/data/etc/nginx/conf.d:/etc/nginx/conf.d
+      - $PWD/data/logs/nginx:/var/log/nginx
+      - /etc/localtime:/etc/localtime:ro
+    links:
+      - teleport
+    restart: always
+    
