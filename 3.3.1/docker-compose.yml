@@ -5,20 +5,20 @@ services:
     container_name: mysql
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - $PWD/data/etc/mysql/my.cnf:/etc/mysql/my.cnf:ro
-      - $PWD/data/db/mysql:/var/lib/mysql
+      - $PWD/data/mysql/etc/my.cnf:/etc/mysql/my.cnf:ro
+      - $PWD/data/mysql/data:/var/lib/mysql      
     restart: always
     command: [
       "--character-set-server=utf8mb4",
       "--collation-server=utf8mb4_unicode_ci",
       "--innodb_flush_log_at_trx_commit=1",
-      "--sync_binlog=1",
+      "--sync_binlog=1"
       ]
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: 12wsxCDE#
       MYSQL_DATABASE: teleport
       MYSQL_USER: teleport
-      MYSQL_PASSWORD: teleport
+      MYSQL_PASSWORD: 12wsxCDE#
     ports:
       - 3306:3306
 
@@ -32,26 +32,52 @@ services:
     command: bash -c "/usr/local/teleport/start.sh && tail -f /usr/local/teleport/data/log/*.log"
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - $PWD/data/etc/teleport:/usr/local/teleport/data/etc
-      - $PWD/data/replay:/usr/local/teleport/data/replay
-      - $PWD/data/logs/teleport:/usr/local/teleport/data/log 
+      - $PWD/data/teleport/etc:/usr/local/teleport/data/etc
+      - $PWD/data/teleport/replay:/usr/local/teleport/data/replay
+      - $PWD/data/teleport/log:/usr/local/teleport/data/log 
     ports:
       - 7190:7190
       - 127.0.0.1:52080:52080
       - 52089:52089
       - 52189:52189
       - 52389:52389
-    
+  
   nginx:
-    container_name: nginx
+    build: .
     image: nginx:latest
+    container_name: nginx
+    depends_on:
+      - teleport
+    tty: true
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - $PWD/data/nginx/etc/nginx.conf:/etc/nginx/nginx.conf
+      - $PWD/data/nginx/etc/conf.d:/etc/nginx/conf.d
+      # - /NWJXZ:/NWJXZ
+      # - /opt/nginx/html:/opt/nginx/html
+      - $PWD/data/nginx/html:/opt/nginx/html
+      - /var/log/nginx:/var/log/nginx
     ports:
       - 80:80
+      - 8000:8000
+      - 8888:8888
+
+  keepalived:
+    image: osixia/keepalived:2.0.19 
+    container_name: keepalived
+    depends_on:
+      - nginx
+    tty: true
+    network_mode: "host"
+    #pid: "host"
+    #pid: "container:nginx"
+    pid: "service:nginx"
+    cap_drop:
+      - NET_ADMIN
+    privileged: true
     volumes:
-      - $PWD/data/etc/nginx/conf.d:/etc/nginx/conf.d
-      - $PWD/data/logs/nginx:/var/log/nginx
-      - /etc/localtime:/etc/localtime:ro
-    links:
-      - teleport
+      #- $PWD/data/keepalived/etc/keepalived.conf:/container/service/keepalived/assets/keepalived.conf:ro
+      - $PWD/data/keepalived/etc/keepalived.conf:/usr/local/etc/keepalived/keepalived.conf:ro
+      - $PWD/data/keepalived/etc/nginx_check.sh:/container/service/keepalived/assets/nginx_check.sh
     restart: always
     

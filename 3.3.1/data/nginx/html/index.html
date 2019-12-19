@@ -1,0 +1,248 @@
+﻿<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="zh_CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style">
+    <title>下载 - Teleport，高效易用的堡垒机</title>
+    <meta name="keywords" content="Teleport,堡垒机,运维,虚拟机监控,云网管,服务器监控,机房监控,网络运维,IT运维,网络工具,云管理">
+    <meta name="description" content="Teleport是一款开源的堡垒机系统，具有简单易用、易于集成等特性。">
+    <link rel="shortcut icon" href="/static/favicon.png?v=342017558602d760b20bc93dc8ef1bc6">
+    <link href="/static/plugins/bootstrap/css/bootstrap.min.css?v=ec3bb52a00e176a7181d454dffaea219" rel="stylesheet" type="text/css" />
+    <link href="/static/plugins/font-awesome/css/font-awesome.min.css?v=7c5c70efc6386e1f69e66154da8c5c8d" rel="stylesheet">
+    <link href="/static/plugins/gritter/css/jquery.gritter.css?v=8fbd35a3d301749de53f4f72ad421ef2" rel="stylesheet">
+    <link href="/static/css/main.css?v=2ddd8a83b164d3d469cc209d56f8c76e" rel="stylesheet" type="text/css" />
+    <style type='text/css'>
+    .mono {
+        font-family: Monaco, Consolas, Lucida Console, Courier, 'Courier New', monospace;
+    }
+
+    .download a {
+        font-family: Monaco, Consolas, Lucida Console, Courier, 'Courier New', monospace;
+        width: 80%;
+    }
+
+    .download a:hover {
+        color: #a34724;
+    }
+
+    .download span.sha1 {
+        font-family: Monaco, Consolas, Lucida Console, Courier, 'Courier New', monospace;
+        color: #804137;
+        background-color: #f9f9f9;
+        border-radius: 3px;
+        border: 1px solid #ddd;
+        padding: 2px 5px;
+    }
+
+    .download .row {
+        margin: 5px 0;
+    }
+
+    .red {
+        color: #f85449;
+    }
+
+    .history {}
+
+    .history h3 {
+        color: #d26533;
+        margin-left: 10px;
+    }
+
+    .history h4 {
+        color: #d26533;
+        margin-left: 40px;
+    }
+
+    .history ul {
+        margin-left: 30px;
+    }
+
+    .history .dl {
+        margin-left: 50px;
+    }
+
+    .important {
+        font-weight: bold;
+        color: #a22119;
+    }
+
+    .dl {
+        margin: 2px 0 2px 0;
+        font-size: 100%;
+    }
+    </style>
+    <script>
+    "use strict";
+
+    var files = { 'teleport-assist-windows-3.3.1.exe': {'path': '/usr/share/nginx/html/static/download/teleport-assist-windows-3.3.1.exe', 'size': 8952404, 'size_str': '8.6M', 'sha1': 'ea5e8669555f40111f27ceb6a330ef61cd7a1773' },'teleport-assist-macos-3.3.1.dmg': { 'path': '/usr/share/nginx/html/static/download/teleport-assist-macos-3.3.1.dmg', 'size': 3486652, 'size_str': '3.4M', 'sha1': '8808e693580c6217fa9ee53687d8732eebc94027' } };
+
+    function show_last_ver(indexs) {
+        var h = [];
+        for (var i in indexs) {
+            var item = indexs[i];
+
+            if (item.f in files) {
+                h.push('<div class="row">');
+                h.push('<div class="col-md-6">');
+                h.push('<a class="dl" href="/static/download/');
+                h.push(item.f);
+                h.push('"><i class="fa fa-' + item.os + '"></i> ');
+                h.push(item.f);
+                h.push('</a></div><div class="col-md-1">');
+                h.push('<div class="right">');
+                h.push(files[item.f].size_str);
+                h.push('</div></div><div class="col-md-5">');
+                h.push('sha1: <span class="sha1">');
+                h.push(files[item.f].sha1);
+                h.push('</span></div></div>');
+            }
+
+        }
+        document.write(h.join(''));
+    }
+
+    function show_dl(indexs) {
+        var h = [];
+        for (var i in indexs) {
+            var item = indexs[i];
+
+            if (item.f in files) {
+                h.push('<p class="dl">');
+                h.push('<a href="/static/download/');
+                h.push(item.f);
+                h.push('"><i class="fa fa-' + item.os + '"></i> ');
+                h.push(item.f);
+                h.push('</a> （');
+                h.push(files[item.f].size_str);
+                h.push('，sha1: <span class="mono">');
+                h.push(files[item.f].sha1);
+                h.push('</span>）</p>');
+            }
+
+        }
+        document.write(h.join(''));
+    }
+    </script>
+</head>
+
+<body class="">
+
+<header class="header">
+    <div class="container">
+        <div class="logo"><a href="http://10.50.167.58:8000"><img src="/static/img/logo.png?v=c983f8ac659511a39a64c2decdbdbde7" alt="TELEPORT"></a></div>
+
+        <div class="header-nav-toggle">
+            <a id="btn-toggle-navbar" href="javascript:void(0);"><span class="fas fa-bars fa-fw"></span></a>
+        </div>
+        <div id="header-navbar" class="header-nav">
+            <nav class="nav clearfix">
+                <ul>
+                    <!--
+                    <li><a href="/">首页</a></li>
+                    -->
+                    <li><a href="http://10.50.167.58:8000" target="_blank">堡垒机</a></li>
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+</header>
+
+
+    <div class="header_fix"></div>
+    <div class="content_box">
+        <div class="container">
+            <div class="box">
+
+            <div class="download">
+
+            	<!--
+                    <div class="row">
+                    <div class="col-md-12">
+                    <hr />
+                    <h2><a class="dl" href="http://10.50.167.58:8000" target="_blank"><i class="fa fa-sign-in fa-fw"></i>访问堡垒机</a></h2>
+                    </div>
+                    </div>
+
+                -->    
+                    <div class="row">
+                    <div class="col-md-12">
+                    <hr />
+                    <h2><i class="fa fa-download fa-fw"></i> 客户端下载</h2>
+                    <script>
+                    show_last_ver([
+					    { os: 'windows', f: 'teleport-assist-windows-3.3.1.exe' },
+                        { os: 'apple', f: 'teleport-assist-macos-3.3.1.dmg' },
+                    ]);
+                    </script>
+                    </div>
+                    </div>
+
+					<div class="row">
+					<div class="col-md-12">
+					<hr />              
+					<h2><i class="fa fa-user fa-fw"></i> 身份验证器登录</h2>
+					<p>要使用身份验证器登录，用户需要首先绑定一个身份验证器。首先切换到“身份验证器登录”界面，点击动态验证码输入框下方的“尚未绑定身份验证器？”链接，打开绑定页面。</p>
+					<p><img alt="web-bind-oath-1" src="/static/img/web-bind-oath-1.png" height="397" width="562"></p>
+					<p>根据页面指引，<strong>先在手机上安装身份验证器</strong>。然后确定手机时间与服务器时间保持同步，之后输入用户名和密码，打开验证并绑定的界面：</p>
+					<p><img alt="web-bind-oath-2" src="/static/img/web-bind-oath-2.png"></p>
+					<p>用手机上的身份验证器扫描二维码，之后身份验证器会生成随时间变化的6位数字的动态验证码。在下方的输入框中输入这6位数，完成身份验证器的绑定操作。</p>
+					<p>绑定完成后，就可以返回到登录页面，使用身份验证器生成的动态验证码来登录teleport系统了。</p>
+					</div>
+					</div>             
+
+            </div>
+        </div>
+        </div>
+                <script type="text/javascript" src="/static/plugins/underscore/underscore.js?v=fbeae87e77d613b1a8d0ceeff4171220"></script>
+                <script type="text/javascript" src="/static/plugins/jquery/jquery-2.2.3.min.js?v=0139f8274e94c9a4a35b8ede4fa4d89a"></script>
+                <script type="text/javascript" src="/static/plugins/bootstrap/js/bootstrap.min.js?v=5869c96cc8f19086aee625d670d741f9"></script>
+                <!--[if lt IE 9]>
+<script src="/static/plugins/html5shiv/html5shiv.min.js?v=7b7a4e3a218061d489d18edc20018200"></script>
+<![endif]-->
+                <script type="text/javascript" src="/static/plugins/json2/json2.js?v=c913adfd000583a307a4b952b0542f75"></script>
+                <script type="text/javascript" src="/static/plugins/gritter/js/jquery.gritter.js?v=8774ab6739d044444dace91604a42802"></script>
+                <script>
+                "use strict";
+                (function() {
+                    $('#show-more').click(function() {
+                        $('#more-history').show();
+                    });
+                })();
+                </script>
+                <script>
+                $(document).ready(function() {
+                    var navbar_shown = false;
+                    $('#btn-toggle-navbar').click(function() {
+                        console.log('abc');
+                        if (navbar_shown) {
+                            $('#header-navbar').hide();
+                            navbar_shown = false;
+                        } else {
+                            $('#header-navbar').show();
+                            navbar_shown = true;
+                        }
+                    });
+                });
+                </script>
+                <script>
+                var _hmt = _hmt || [];
+                (function() {
+                    var hm = document.createElement("script");
+                    hm.src = "/static/hm.js?2977bd7c37dadcc0180ee07244d0aa06";
+                    var s = document.getElementsByTagName("script")[0];
+                    s.parentNode.insertBefore(hm, s);
+                })();
+                </script>
+</body>
+
+</html>
+
