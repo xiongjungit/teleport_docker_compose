@@ -159,7 +159,6 @@ mysql> show master status;
 mysql>
 ```
 
-
 ## 2.2 slave上配置同步
 
 ```
