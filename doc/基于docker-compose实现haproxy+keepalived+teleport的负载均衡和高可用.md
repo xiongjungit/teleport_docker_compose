@@ -1,3 +1,5 @@
+[toc]
+
 # 环境说明
 
 | 主机名 | IP地址        | 操作系统 | 组件                                    | 备注          |
@@ -8,35 +10,47 @@
 
 # 架构图
 
-![](./teleport.png)
+![](https://github.com/xiongjungit/teleport_docker_compose/raw/master/doc/teleport.png)
 
 # 目录结构
 
 ```
-# tree -L 3 /root/docker-compose/teleport
-
+# tree -L 4 /root/docker-compose/teleport
 /root/docker-compose/teleport
 ├── data
 │   ├── haproxy
 │   │   └── haproxy.cfg
 │   ├── keepalived
-│   │   └── etc
+│   │   ├── keepalived.conf
+│   │   └── nginx_check.sh
 │   ├── mysql
-│   │   ├── data
 │   │   └── etc
+│   │       └── my.cnf
 │   ├── nginx
 │   │   ├── etc
+│   │   │   ├── conf.d
+│   │   │   └── nginx.conf
 │   │   └── html
+│   │       ├── 50x.html
+│   │       ├── index.html
+│   │       └── static
 │   └── teleport
 │       ├── etc
+│       │   ├── core.ini
+│       │   ├── tp_ssh_server.key
+│       │   └── web.ini
 │       ├── log
+│       │   ├── tpcore.log
+│       │   └── tpweb.log
 │       └── replay
 ├── docker-compose.yml
 ├── Dockerfile
 ├── libs
 │   └── teleport-server-linux-x64-3.3.1.tar.gz
-├── restart.log
 └── restart.sh
+
+15 directories, 16 files
+[root@node1 teleport]#
 ```
 
 # 配置文件
@@ -139,8 +153,8 @@ services:
       - NET_ADMIN
     privileged: true
     volumes:
-      - $PWD/data/keepalived/etc/keepalived.conf:/usr/local/etc/keepalived/keepalived.conf:ro
-      - $PWD/data/keepalived/etc/nginx_check.sh:/container/service/keepalived/assets/nginx_check.sh:ro
+      - $PWD/data/keepalived/keepalived.conf:/usr/local/etc/keepalived/keepalived.conf:ro
+      - $PWD/data/keepalived/nginx_check.sh:/container/service/keepalived/assets/nginx_check.sh:ro
     restart: always
 ```
 
@@ -670,7 +684,7 @@ binlog-do-db=teleport #开启同步的数据库
 
 
 
-# 配置MySQL 双主同步
+# 配置mysql 双主同步
 
 > MySQL主主复制结构区别于主从复制结构。在主主复制结构中，两台服务器的任何一台上面的数据库存发生了改变都会同步到另一台服务器上，这样两台服务器互为主从，并且都能向外提供服务。
 
@@ -787,4 +801,44 @@ mysql主从复制报错:A slave with the same server_uuid as this slave has conn
 [auto]
 server-uuid=d186c795-4a2a-11e9-a756-0242ac140002
 ```
+
+# 启动teleport
+
+```
+# cd /root/docker-compose/
+# docker-compose up -d
+Creating network "teleport_default" with the default driver
+Creating mysql ... done
+Creating teleport ... done
+Creating nginx    ... done
+Creating keepalived ... done
+Creating haproxy    ... done
+
+# docker-compose ps --service
+mysql
+teleport
+nginx
+haproxy
+keepalived
+```
+
+# 查看haproxy状态
+
+http://192.168.56.15/status
+
+![](https://github.com/xiongjungit/teleport_docker_compose/raw/master/doc/haproxy.png)
+
+# 访问teleport
+
+http://192.168.56.15
+
+![](https://github.com/xiongjungit/teleport_docker_compose/raw/master/doc/index.png)
+
+![](https://github.com/xiongjungit/teleport_docker_compose/raw/master/doc/teleport1.png)
+
+![](https://github.com/xiongjungit/teleport_docker_compose/raw/master/doc/teleport2.png)
+
+![](https://github.com/xiongjungit/teleport_docker_compose/raw/master/doc/teleport3.png)
+
+![](https://github.com/xiongjungit/teleport_docker_compose/raw/master/doc/teleport4.png)
 

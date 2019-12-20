@@ -91,7 +91,7 @@ services:
       - NET_ADMIN
     privileged: true
     volumes:
-      - $PWD/data/keepalived/etc/keepalived.conf:/usr/local/etc/keepalived/keepalived.conf:ro
-      - $PWD/data/keepalived/etc/nginx_check.sh:/container/service/keepalived/assets/nginx_check.sh:ro
+      - $PWD/data/keepalived/keepalived.conf:/usr/local/etc/keepalived/keepalived.conf:ro
+      - $PWD/data/keepalived/nginx_check.sh:/container/service/keepalived/assets/nginx_check.sh:ro
     restart: always
     
