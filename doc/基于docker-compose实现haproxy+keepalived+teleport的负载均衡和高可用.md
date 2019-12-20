@@ -703,6 +703,7 @@ docker exec -it mysql bash -c "mysql -uroot -p12wsxCDE# -se 'show slave status\G
 #查看uuid
 docker exec -it mysql bash -c "mysql -uroot -p12wsxCDE# -se 'show slave hosts\G;'"
 ```
+
 登录mysql
 
 ```
@@ -841,4 +842,3 @@ http://192.168.56.15
 ![](https://github.com/xiongjungit/teleport_docker_compose/raw/master/doc/teleport3.png)
 
 ![](https://github.com/xiongjungit/teleport_docker_compose/raw/master/doc/teleport4.png)
-
