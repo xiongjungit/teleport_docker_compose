@@ -10,7 +10,7 @@
 
 # 架构图
 
-![](https://github.com/xiongjungit/teleport_docker_compose/raw/master/doc/teleport.png)
+![](https://github.com/xiongjungit/teleport_docker_compose/raw/master/doc/teleport.svg)
 
 # 目录结构
 
