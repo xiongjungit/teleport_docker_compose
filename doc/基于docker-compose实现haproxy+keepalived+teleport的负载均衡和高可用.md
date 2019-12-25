@@ -18,35 +18,35 @@
 # tree -L 4 /root/docker-compose/teleport
 /root/docker-compose/teleport
 ├── data
-│   ├── haproxy
-│   │   └── haproxy.cfg
-│   ├── keepalived
-│   │   ├── keepalived.conf
-│   │   └── nginx_check.sh
-│   ├── mysql
-│   │   └── etc
-│   │       └── my.cnf
-│   ├── nginx
-│   │   ├── etc
-│   │   │   ├── conf.d
-│   │   │   └── nginx.conf
-│   │   └── html
-│   │       ├── 50x.html
-│   │       ├── index.html
-│   │       └── static
-│   └── teleport
-│       ├── etc
-│       │   ├── core.ini
-│       │   ├── tp_ssh_server.key
-│       │   └── web.ini
-│       ├── log
-│       │   ├── tpcore.log
-│       │   └── tpweb.log
-│       └── replay
+│   ├── haproxy
+│   │   └── haproxy.cfg
+│   ├── keepalived
+│   │   ├── keepalived.conf
+│   │   └── nginx_check.sh
+│   ├── mysql
+│   │   └── etc
+│   │       └── my.cnf
+│   ├── nginx
+│   │   ├── etc
+│   │   │   ├── conf.d
+│   │   │   └── nginx.conf
+│   │   └── html
+│   │       ├── 50x.html
+│   │       ├── index.html
+│   │       └── static
+│   └── teleport
+│       ├── etc
+│       │   ├── core.ini
+│       │   ├── tp_ssh_server.key
+│       │   └── web.ini
+│       ├── log
+│       │   ├── tpcore.log
+│       │   └── tpweb.log
+│       └── replay
 ├── docker-compose.yml
 ├── Dockerfile
 ├── libs
-│   └── teleport-server-linux-x64-3.3.1.tar.gz
+│   └── teleport-server-linux-x64-3.3.1.tar.gz
 └── restart.sh
 
 15 directories, 16 files
@@ -829,6 +829,8 @@ http://192.168.56.15/status
 
 ![](https://github.com/xiongjungit/teleport_docker_compose/raw/master/doc/haproxy.png)
 
+
+
 # 访问teleport
 
 http://192.168.56.15
@@ -841,4 +843,4 @@ http://192.168.56.15
 
 ![](https://github.com/xiongjungit/teleport_docker_compose/raw/master/doc/teleport3.png)
 
-![](https://github.com/xiongjungit/teleport_docker_compose/raw/master/doc/teleport4.png)
+![](https://github.com/xiongjungit/teleport_docker_compose/raw/master/doc/teleport4.png)s
